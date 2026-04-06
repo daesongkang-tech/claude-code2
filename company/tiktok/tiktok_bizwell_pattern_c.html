@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ビズウェル Pattern C - 就職実績版</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+      font-family: 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+    }
+    .video { width: 390px; height: 844px; position: relative; overflow: hidden; background: #080a00; }
+    .scene { position: absolute; inset: 0; opacity: 0; }
+
+    .scene-1 { animation: show 3.5s ease 0s    forwards; }
+    .scene-2 { animation: show 5.0s ease 3s    forwards; }
+    .scene-3 { animation: show 5.5s ease 7.5s  forwards; }
+    .scene-4 { animation: show 4.5s ease 12.5s forwards; }
+    .scene-5 { animation: show 5.0s ease 16.5s forwards; }
+
+    @keyframes show {
+      0%  { opacity: 0; }
+      3%  { opacity: 1; }
+      95% { opacity: 1; }
+      100%{ opacity: 0; }
+    }
+    @keyframes up {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes left {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(118,255,3,0.4); }
+      50%      { box-shadow: 0 0 0 10px rgba(118,255,3,0); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: scale(0.7); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── SCENE 1: HOOK ── */
+    .scene-1 {
+      background: radial-gradient(ellipse at 50% 40%, #0d1500 0%, #040800 70%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .s1-deco {
+      position: absolute; font-size: 150px; font-weight: 900;
+      color: rgba(118,255,3,0.04); user-select: none;
+      top: 48%; left: 50%; transform: translate(-50%,-52%);
+    }
+    .s1-line { font-weight: 900; text-align: center; opacity: 0; padding: 0 24px; position: relative; }
+    .l1 { font-size: 38px; color: rgba(255,255,255,0.7); animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.2s forwards; }
+    .l2 { font-size: 54px; color: #76FF03; animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.5s forwards; margin-top: 4px; }
+    .l3 { font-size: 54px; color: #76FF03; animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.9s forwards; }
+    .l4 { font-size: 32px; color: #fff; animation: up 0.5s cubic-bezier(.22,1,.36,1) 1.3s forwards; margin-top: 6px; }
+    .l5 { font-size: 14px; color: rgba(255,255,255,0.45); animation: up 0.4s ease 1.8s forwards; margin-top: 16px; }
+
+    /* ── SCENE 2: PROBLEM ── */
+    .scene-2 {
+      background: linear-gradient(175deg, #0a1000 0%, #182000 65%, #0a1000 100%);
+      display: flex; align-items: center;
+    }
+    .s2 { padding: 50px 28px; width: 100%; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(118,255,3,0.08); border: 1px solid rgba(118,255,3,0.2);
+      color: #B2FF59; padding: 5px 12px;
+      border-radius: 100px; font-size: 13px; font-weight: 600;
+      margin-bottom: 18px; opacity: 0;
+    }
+    .t2 { animation: up 0.4s ease 3.3s forwards; }
+    .t3 { animation: up 0.4s ease 7.8s forwards; }
+    .s2-h {
+      font-size: 34px; font-weight: 900; color: #fff;
+      line-height: 1.35; margin-bottom: 14px; opacity: 0;
+      animation: up 0.45s ease 3.6s forwards;
+    }
+    .s2-p {
+      font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.85;
+      margin-bottom: 20px; opacity: 0;
+      animation: up 0.45s ease 3.9s forwards;
+    }
+    .s2-cta {
+      font-size: 18px; font-weight: 700; color: #76FF03;
+      line-height: 1.65; opacity: 0;
+      animation: up 0.45s ease 4.6s forwards;
+    }
+    .em { color: #B2FF59; font-weight: 700; }
+
+    /* ── SCENE 3: SOLUTION（就職サポート）── */
+    .scene-3 {
+      background: linear-gradient(165deg, #061200 0%, #0f2a00 55%, #1a4200 100%);
+      display: flex; align-items: center;
+    }
+    .s3 { padding: 50px 28px; width: 100%; }
+    .s3-label { font-size: 20px; font-weight: 900; color: rgba(255,255,255,0.8); margin-bottom: 4px; opacity: 0; animation: up 0.4s ease 8.1s forwards; }
+    .s3-sub   { font-size: 34px; font-weight: 900; color: #76FF03; line-height: 1.2; margin-bottom: 22px; opacity: 0; animation: up 0.4s ease 8.1s forwards; }
+    .support-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 13px 15px;
+      background: rgba(118,255,3,0.06); border: 1px solid rgba(118,255,3,0.15);
+      border-radius: 14px; margin-bottom: 11px; opacity: 0;
+    }
+    .sp1 { animation: left 0.4s ease 8.5s  forwards; }
+    .sp2 { animation: left 0.4s ease 9.0s  forwards; }
+    .sp3 { animation: left 0.4s ease 9.5s  forwards; }
+    .sp4 { animation: left 0.4s ease 10.0s forwards; }
+    .si { font-size: 26px; min-width: 34px; }
+    .st h3 { font-size: 15px; font-weight: 700; color: #B2FF59; margin-bottom: 3px; }
+    .st p  { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.45; }
+
+    /* ── SCENE 4: 就職実績 ── */
+    .scene-4 {
+      background: linear-gradient(180deg, #061200 0%, #0f2000 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .s4 { padding: 50px 28px; width: 100%; }
+    .s4-h { text-align: center; margin-bottom: 20px; opacity: 0; animation: up 0.4s ease 12.8s forwards; }
+    .s4-h h2 { font-size: 22px; font-weight: 800; color: #fff; }
+    .s4-h p  { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+    .result-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; opacity: 0;
+      animation: up 0.45s ease 13.1s forwards;
+    }
+    .result-card {
+      background: rgba(118,255,3,0.07); border: 1px solid rgba(118,255,3,0.18);
+      border-radius: 16px; padding: 16px 12px; text-align: center;
+    }
+    .result-num  { font-size: 32px; font-weight: 900; color: #76FF03; line-height: 1; }
+    .result-unit { font-size: 14px; font-weight: 700; color: #76FF03; }
+    .result-label{ font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 6px; line-height: 1.4; }
+    .result-feature {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 14px 16px; opacity: 0;
+      animation: up 0.4s ease 13.8s forwards;
+    }
+    .rf-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+    .rf-icon { font-size: 18px; }
+    .rf-text { font-size: 14px; color: rgba(255,255,255,0.85); }
+    .rf-badge { margin-left: auto; background: rgba(118,255,3,0.15); color: #B2FF59; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+
+    /* ── SCENE 5: CTA ── */
+    .scene-5 {
+      background: linear-gradient(155deg, #061200 0%, #0f2800 50%, #183800 100%);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .deco-a { position: absolute; width: 300px; height: 300px; background: rgba(118,255,3,0.04); border-radius: 50%; top: -80px; right: -70px; }
+    .deco-b { position: absolute; width: 180px; height: 180px; background: rgba(118,255,3,0.03); border-radius: 50%; bottom: 50px; left: -50px; }
+    .s5 { padding: 50px 32px; text-align: center; position: relative; width: 100%; }
+    .logo-box {
+      width: 72px; height: 72px; background: rgba(118,255,3,0.15); border-radius: 22px;
+      display: flex; align-items: center; justify-content: center; font-size: 38px;
+      margin: 0 auto 10px; opacity: 0; animation: up 0.45s ease 16.8s forwards;
+    }
+    .brand   { font-size: 30px; font-weight: 900; color: #fff; opacity: 0; animation: up 0.4s ease 17.1s forwards; }
+    .brand-s { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; margin-bottom: 18px; opacity: 0; animation: up 0.4s ease 17.3s forwards; }
+    .cta-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(118,255,3,0.12); border: 1px solid rgba(118,255,3,0.3);
+      color: #B2FF59; padding: 9px 18px; border-radius: 100px;
+      font-size: 14px; font-weight: 700; margin-bottom: 14px; opacity: 0;
+      animation: up 0.4s ease 17.6s forwards;
+    }
+    .pulse-dot { width: 8px; height: 8px; background: #76FF03; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+    .cta-h   { font-size: 28px; font-weight: 900; color: #fff; line-height: 1.35; margin-bottom: 10px; opacity: 0; animation: up 0.4s ease 17.8s forwards; }
+    .cta-p   { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.75; margin-bottom: 18px; opacity: 0; animation: up 0.4s ease 18.1s forwards; }
+    .cta-btn {
+      display: block; background: #76FF03; color: #061200; padding: 15px 32px;
+      border-radius: 100px; font-size: 15px; font-weight: 800;
+      box-shadow: 0 8px 22px rgba(118,255,3,0.3); opacity: 0;
+      animation: up 0.4s ease 18.4s forwards;
+    }
+    .replay {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; padding: 7px 18px; border-radius: 100px; font-size: 12px; cursor: pointer;
+      z-index: 10; opacity: 0; animation: fadeIn 0.4s ease 22s forwards;
+    }
+  </style>
+</head>
+<body>
+<div class="video">
+
+  <!-- SCENE 1: HOOK -->
+  <div class="scene scene-1">
+    <div class="s1-deco">&#10003;</div>
+    <div class="s1-line l1">障害のある方が</div>
+    <div class="s1-line l2">IT企業に</div>
+    <div class="s1-line l3">就職できた</div>
+    <div class="s1-line l4">その秘密とは？</div>
+    <div class="s1-line l5">&#8595; ビズウェルの就職サポートを公開します</div>
+  </div>
+
+  <!-- SCENE 2: PROBLEM -->
+  <div class="scene scene-2">
+    <div class="s2">
+      <span class="tag t2">&#128546; こんな経験はありませんか？</span>
+      <h2 class="s2-h">「就活で何度も<br>落とされて<br>自信をなくした…」</h2>
+      <p class="s2-p">
+        <span class="em">障害への理解がない企業</span>に<br>
+        応募し続けて消耗していませんか？<br>
+        ビズウェルは<span class="em">ミスマッチゼロ</span>の<br>就職を目指します。
+      </p>
+      <div class="s2-cta">IT×在宅ワークで<br>あなたに合った働き方を見つけます</div>
+    </div>
+  </div>
+
+  <!-- SCENE 3: SOLUTION -->
+  <div class="scene scene-3">
+    <div class="s3">
+      <span class="tag t3">&#128736; 就職サポートの特徴</span>
+      <div class="s3-label">ビズウェルの</div>
+      <div class="s3-sub">就職サポート力</div>
+      <div class="support-item sp1">
+        <div class="si">&#127919;</div>
+        <div class="st"><h3>障害理解のある企業のみ紹介</h3><p>事前に職場環境・配慮事項を確認済み</p></div>
+      </div>
+      <div class="support-item sp2">
+        <div class="si">&#127968;</div>
+        <div class="st"><h3>在宅・リモート求人を優先マッチング</h3><p>通勤ストレスなしで働ける環境を探す</p></div>
+      </div>
+      <div class="support-item sp3">
+        <div class="si">&#128203;</div>
+        <div class="st"><h3>履歴書・面接対策を徹底サポート</h3><p>AIを使って採用率を最大化</p></div>
+      </div>
+      <div class="support-item sp4">
+        <div class="si">&#128222;</div>
+        <div class="st"><h3>就職後も6ヶ月間定着支援</h3><p>入社後のトラブル・相談も対応</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 4: 就職実績 -->
+  <div class="scene scene-4">
+    <div class="s4">
+      <div class="s4-h">
+        <h2>ビズウェルの就職実績</h2>
+        <p>就職者の実際の声・データ</p>
+      </div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-num">多数</div>
+          <div class="result-label">IT企業への<br>就職実績</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">&#165;0</div>
+          <div class="result-label">受講料<br>完全無料</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">&#128640;</div>
+          <div class="result-label">AI×IT<br>特化訓練</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">OK</div>
+          <div class="result-label">オンライン<br>相談対応</div>
+        </div>
+      </div>
+      <div class="result-feature">
+        <div class="rf-row">
+          <span class="rf-icon">&#127968;</span>
+          <span class="rf-text">在宅ワーク可能な就職先</span>
+          <span class="rf-badge">多数あり</span>
+        </div>
+        <div class="rf-row">
+          <span class="rf-icon">&#128736;</span>
+          <span class="rf-text">AI・IT系職種への就職</span>
+          <span class="rf-badge">実績あり</span>
+        </div>
+        <div class="rf-row">
+          <span class="rf-icon">&#129309;</span>
+          <span class="rf-text">就職後の定着サポート</span>
+          <span class="rf-badge">6ヶ月間</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 5: CTA -->
+  <div class="scene scene-5">
+    <div class="deco-a"></div>
+    <div class="deco-b"></div>
+    <div class="s5">
+      <div class="logo-box">&#127807;</div>
+      <div class="brand">ビズウェル</div>
+      <div class="brand-s">株式会社ビズリンクウェルビーイング</div>
+      <div class="cta-badge"><div class="pulse-dot"></div>就職サポート 完全無料</div>
+      <div class="cta-h">あなたも<br>一緒に就職しよう</div>
+      <div class="cta-p">見学・相談は完全無料<br>オンラインでもOK<br>精神・発達障害のある方・ご家族歓迎</div>
+      <div class="cta-btn">プロフィールのリンクから &#8599;</div>
+    </div>
+  </div>
+
+  <button class="replay" onclick="location.reload()">&#9654; もう一度見る</button>
+</div>
+</body>
+</html>

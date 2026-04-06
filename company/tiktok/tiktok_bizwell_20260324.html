@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ビズウェル 就労移行支援PR</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+    }
+    .video {
+      width: 390px; height: 844px;
+      position: relative; overflow: hidden; background: #000;
+    }
+    .scene { position: absolute; inset: 0; opacity: 0; }
+
+    /* 合計 ~22秒 */
+    .scene-1 { animation: show 3.5s ease 0s    forwards; }
+    .scene-2 { animation: show 5.0s ease 3s    forwards; }
+    .scene-3 { animation: show 5.5s ease 7.5s  forwards; }
+    .scene-4 { animation: show 4.5s ease 12.5s forwards; }
+    .scene-5 { animation: show 5.0s ease 16.5s forwards; }
+
+    @keyframes show {
+      0%  { opacity: 0; }
+      3%  { opacity: 1; }
+      95% { opacity: 1; }
+      100%{ opacity: 0; }
+    }
+    @keyframes up {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes left {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ── SCENE 1: HOOK ── */
+    .scene-1 {
+      background: radial-gradient(ellipse at 50% 40%, #061a08 0%, #000 70%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .s1-deco {
+      position: absolute; font-size: 180px; font-weight: 900;
+      color: rgba(0,230,118,0.04); user-select: none;
+      top: 48%; left: 50%; transform: translate(-50%,-52%);
+    }
+    .s1-line { font-weight: 900; text-align: center; opacity: 0; padding: 0 24px; position: relative; }
+    .l1 { font-size: 44px; color: #00E676; animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.2s forwards; }
+    .l2 { font-size: 54px; color: #fff;    animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.5s forwards; margin-top: 4px; }
+    .l3 { font-size: 54px; color: #fff;    animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.9s forwards; }
+    .l4 { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.65; text-align: center;
+          animation: up 0.45s ease 1.6s forwards; margin-top: 22px; }
+
+    /* ── SCENE 2: PROBLEM ── */
+    .scene-2 {
+      background: linear-gradient(175deg, #0d1b2a 0%, #1a3a5c 65%, #0d1b2a 100%);
+      display: flex; align-items: center;
+    }
+    .s2 { padding: 50px 28px; width: 100%; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85); padding: 5px 12px;
+      border-radius: 100px; font-size: 13px; font-weight: 600;
+      margin-bottom: 18px; opacity: 0;
+    }
+    .t2 { animation: up 0.4s ease 3.3s forwards; }
+    .t3 { animation: up 0.4s ease 7.8s forwards; }
+    .s2-h {
+      font-size: 34px; font-weight: 900; color: #fff;
+      line-height: 1.35; margin-bottom: 14px; opacity: 0;
+      animation: up 0.45s ease 3.6s forwards;
+    }
+    .s2-h2 {
+      font-size: 28px; font-weight: 800; color: rgba(255,255,255,0.85);
+      line-height: 1.35; margin-bottom: 20px; opacity: 0;
+      animation: up 0.45s ease 3.9s forwards;
+    }
+    .s2-cta {
+      font-size: 18px; font-weight: 700; color: #00E676;
+      line-height: 1.65; opacity: 0;
+      animation: up 0.45s ease 4.6s forwards;
+    }
+    .em { color: #64B5F6; font-weight: 700; }
+
+    /* ── SCENE 3: SOLUTION ── */
+    .scene-3 {
+      background: linear-gradient(165deg, #003d2b 0%, #006644 55%, #00a37a 100%);
+      display: flex; align-items: center;
+    }
+    .s3 { padding: 50px 28px; width: 100%; }
+    .s3-label {
+      font-size: 22px; font-weight: 900; color: #fff;
+      margin-bottom: 4px; opacity: 0;
+      animation: up 0.4s ease 8.1s forwards;
+    }
+    .s3-sub {
+      font-size: 38px; font-weight: 900; color: #00E676;
+      line-height: 1.2; margin-bottom: 22px; opacity: 0;
+      animation: up 0.4s ease 8.1s forwards;
+    }
+    .feat { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; opacity: 0; }
+    .f1 { animation: left 0.4s ease 8.5s  forwards; }
+    .f2 { animation: left 0.4s ease 9.0s  forwards; }
+    .f3 { animation: left 0.4s ease 9.5s  forwards; }
+    .f4 { animation: left 0.4s ease 10.0s forwards; }
+    .fi {
+      width: 46px; height: 46px; min-width: 46px;
+      background: rgba(255,255,255,0.18); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
+    }
+    .ft h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .ft p  { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.45; }
+
+    /* ── SCENE 4: CURRICULUM ── */
+    .scene-4 {
+      background: linear-gradient(180deg, #0f0824 0%, #1a0f3a 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .s4 { padding: 50px 28px; width: 100%; }
+    .s4-h { text-align: center; margin-bottom: 20px; opacity: 0; animation: up 0.4s ease 12.8s forwards; }
+    .s4-h h2 { font-size: 22px; font-weight: 800; color: #fff; }
+    .s4-h p  { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+    .skill-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 15px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; margin-bottom: 9px; opacity: 0;
+    }
+    .sk1 { animation: left 0.35s ease 13.1s forwards; }
+    .sk2 { animation: left 0.35s ease 13.5s forwards; }
+    .sk3 { animation: left 0.35s ease 13.9s forwards; }
+    .sk4 { animation: left 0.35s ease 14.3s forwards; }
+    .sk5 { animation: left 0.35s ease 14.7s forwards; }
+    .si-icon { font-size: 26px; min-width: 32px; }
+    .si-text h4 { font-size: 14px; font-weight: 700; color: #fff; }
+    .si-text p  { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+    /* ── SCENE 5: CTA ── */
+    .scene-5 {
+      background: linear-gradient(155deg, #004d40 0%, #00897b 50%, #26a69a 100%);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .deco-a { position: absolute; width: 320px; height: 320px; background: rgba(255,255,255,0.05); border-radius: 50%; top: -90px; right: -80px; }
+    .deco-b { position: absolute; width: 200px; height: 200px; background: rgba(255,255,255,0.04); border-radius: 50%; bottom: 50px; left: -60px; }
+    .s5 { padding: 50px 32px; text-align: center; position: relative; width: 100%; }
+    .logo-box {
+      width: 72px; height: 72px; background: rgba(255,255,255,0.18); border-radius: 22px;
+      display: flex; align-items: center; justify-content: center; font-size: 38px;
+      margin: 0 auto 10px; opacity: 0; animation: up 0.45s ease 16.8s forwards;
+    }
+    .brand   { font-size: 30px; font-weight: 900; color: #fff; opacity: 0; animation: up 0.4s ease 17.1s forwards; }
+    .brand-s { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; margin-bottom: 20px; opacity: 0; animation: up 0.4s ease 17.3s forwards; }
+    .cta-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,220,80,0.15); border: 1px solid rgba(255,220,80,0.4);
+      color: #FFE57F; padding: 9px 18px; border-radius: 100px;
+      font-size: 14px; font-weight: 700; margin-bottom: 12px; opacity: 0;
+      animation: up 0.4s ease 17.6s forwards;
+    }
+    .cta-h   { font-size: 30px; font-weight: 900; color: #fff; line-height: 1.35; margin-bottom: 12px; opacity: 0; animation: up 0.4s ease 17.8s forwards; }
+    .cta-p   { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.75; margin-bottom: 20px; opacity: 0; animation: up 0.4s ease 18.1s forwards; }
+    .cta-btn {
+      display: block; background: #fff; color: #00897b; padding: 15px 32px;
+      border-radius: 100px; font-size: 15px; font-weight: 800;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.18); opacity: 0;
+      animation: up 0.4s ease 18.4s forwards;
+    }
+    .replay {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+      color: #fff; padding: 7px 18px; border-radius: 100px; font-size: 12px; cursor: pointer;
+      z-index: 10; opacity: 0; animation: fadeIn 0.4s ease 22s forwards;
+    }
+  </style>
+</head>
+<body>
+<div class="video">
+
+  <!-- SCENE 1: HOOK -->
+  <div class="scene scene-1">
+    <div class="s1-deco">AI</div>
+    <div class="s1-line l1">AIが学べる</div>
+    <div class="s1-line l2">就労移行支援</div>
+    <div class="s1-line l3">知ってますか？</div>
+    <div class="s1-line l4">障害のある方が無料でAIを学んで<br>IT就職できる場所があります</div>
+  </div>
+
+  <!-- SCENE 2: PROBLEM -->
+  <div class="scene scene-2">
+    <div class="s2">
+      <span class="tag t2">&#9995; こんなお悩みありませんか？</span>
+      <h2 class="s2-h">「障害があって<br>働ける気がしない…」</h2>
+      <h3 class="s2-h2">「スキルが何もなくて<br>自信がない…」</h3>
+      <div class="s2-cta">
+        その悩み、ビズウェルが解決します<br>
+        <span style="font-size:14px;color:rgba(255,255,255,0.65);">AIスキル × 就職支援 × 給付金活用</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 3: SOLUTION -->
+  <div class="scene scene-3">
+    <div class="s3">
+      <span class="tag t3">&#128161; ビズウェルが選ばれる理由</span>
+      <div class="s3-label">AI特化型</div>
+      <div class="s3-sub">就労移行支援</div>
+      <div class="feat f1"><div class="fi">&#129302;</div><div class="ft"><h3>ChatGPT・画像生成AIを習得</h3><p>実務で使えるAIスキルをゼロから学べる</p></div></div>
+      <div class="feat f2"><div class="fi">&#128188;</div><div class="ft"><h3>IT就職・在宅ワーク実績あり</h3><p>リモート可IT企業への就職をフルサポート</p></div></div>
+      <div class="feat f3"><div class="fi">&#129309;</div><div class="ft"><h3>専任スタッフが毎日個別サポート</h3><p>自分のペースで無理なく続けられる</p></div></div>
+      <div class="feat f4"><div class="fi">&#127974;</div><div class="ft"><h3>受講料&#165;0・給付金活用OK</h3><p>経済的な不安なくスキルアップできる</p></div></div>
+    </div>
+  </div>
+
+  <!-- SCENE 4: CURRICULUM -->
+  <div class="scene scene-4">
+    <div class="s4">
+      <div class="s4-h">
+        <h2>実際に学べるAIスキル</h2>
+        <p>カリキュラム例</p>
+      </div>
+      <div class="skill-item sk1">
+        <div class="si-icon">&#128172;</div>
+        <div class="si-text"><h4>ChatGPTで文章・メール作成</h4><p>プロンプト設計から実務活用まで</p></div>
+      </div>
+      <div class="skill-item sk2">
+        <div class="si-icon">&#127912;</div>
+        <div class="si-text"><h4>画像生成AIでデザイン制作</h4><p>Midjourney / DALL-E 操作習得</p></div>
+      </div>
+      <div class="skill-item sk3">
+        <div class="si-icon">&#9889;</div>
+        <div class="si-text"><h4>業務自動化ツールの操作</h4><p>ノーコードで繰り返し作業を削減</p></div>
+      </div>
+      <div class="skill-item sk4">
+        <div class="si-icon">&#128196;</div>
+        <div class="si-text"><h4>AIで就職書類を短時間作成</h4><p>履歴書・職務経歴書を最適化</p></div>
+      </div>
+      <div class="skill-item sk5">
+        <div class="si-icon">&#128187;</div>
+        <div class="si-text"><h4>プログラミング×AI入門</h4><p>Python基礎 + AI API連携の体験</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 5: CTA -->
+  <div class="scene scene-5">
+    <div class="deco-a"></div>
+    <div class="deco-b"></div>
+    <div class="s5">
+      <div class="logo-box">&#127807;</div>
+      <div class="brand">ビズウェル</div>
+      <div class="brand-s">株式会社ビズリンクウェルビーイング</div>
+      <div class="cta-badge">受講料&#165;0 &#xFF5C; 就職実績あり</div>
+      <div class="cta-h">まずは<br>無料見学から</div>
+      <div class="cta-p">相談・見学は完全無料<br>オンラインでもOK<br>精神・発達障害のある方・ご家族歓迎</div>
+      <div class="cta-btn">プロフィールのリンクから &#8599;</div>
+    </div>
+  </div>
+
+  <button class="replay" onclick="location.reload()">&#9654; もう一度見る</button>
+</div>
+</body>
+</html>

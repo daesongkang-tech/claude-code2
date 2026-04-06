@@ -1,0 +1,7 @@
+.claude/settings.local.json
+*.mp4
+*.wav
+node_modules/
+.frames_tmp/
+.video_silent.mp4
+package-lock.json

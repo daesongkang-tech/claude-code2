@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ビズウェル Pattern A - 給付金強調版</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+      font-family: 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+    }
+    .video { width: 390px; height: 844px; position: relative; overflow: hidden; background: #100800; }
+    .scene { position: absolute; inset: 0; opacity: 0; }
+
+    .scene-1 { animation: show 3.5s ease 0s    forwards; }
+    .scene-2 { animation: show 5.0s ease 3s    forwards; }
+    .scene-3 { animation: show 5.5s ease 7.5s  forwards; }
+    .scene-4 { animation: show 4.5s ease 12.5s forwards; }
+    .scene-5 { animation: show 5.0s ease 16.5s forwards; }
+
+    @keyframes show {
+      0%  { opacity: 0; }
+      3%  { opacity: 1; }
+      95% { opacity: 1; }
+      100%{ opacity: 0; }
+    }
+    @keyframes up {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes left {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,179,0,0.4); }
+      50%      { box-shadow: 0 0 0 10px rgba(255,179,0,0); }
+    }
+
+    /* ── SCENE 1: HOOK ── */
+    .scene-1 {
+      background: radial-gradient(ellipse at 50% 40%, #1a0f00 0%, #080400 70%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .s1-deco {
+      position: absolute; font-size: 160px; font-weight: 900;
+      color: rgba(255,179,0,0.05); user-select: none;
+      top: 48%; left: 50%; transform: translate(-50%,-52%);
+    }
+    .s1-line { font-weight: 900; text-align: center; opacity: 0; padding: 0 24px; position: relative; }
+    .l1 { font-size: 36px; color: rgba(255,255,255,0.7); animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.2s forwards; }
+    .l2 { font-size: 62px; color: #FFB300; animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.5s forwards; margin-top: 4px; line-height: 1.1; }
+    .l3 { font-size: 62px; color: #FFB300; animation: up 0.55s cubic-bezier(.22,1,.36,1) 0.9s forwards; }
+    .l4 { font-size: 52px; color: #fff; animation: up 0.55s cubic-bezier(.22,1,.36,1) 1.2s forwards; margin-top: 4px; }
+    .l5 { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.65; animation: up 0.45s ease 1.8s forwards; margin-top: 20px; }
+
+    /* ── SCENE 2: PROBLEM ── */
+    .scene-2 {
+      background: linear-gradient(175deg, #150f00 0%, #2d1f00 65%, #150f00 100%);
+      display: flex; align-items: center;
+    }
+    .s2 { padding: 50px 28px; width: 100%; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,179,0,0.12); border: 1px solid rgba(255,179,0,0.25);
+      color: #FFD54F; padding: 5px 12px;
+      border-radius: 100px; font-size: 13px; font-weight: 600;
+      margin-bottom: 18px; opacity: 0;
+    }
+    .t2 { animation: up 0.4s ease 3.3s forwards; }
+    .t3 { animation: up 0.4s ease 7.8s forwards; }
+    .s2-h {
+      font-size: 32px; font-weight: 900; color: #fff;
+      line-height: 1.4; margin-bottom: 14px; opacity: 0;
+      animation: up 0.45s ease 3.6s forwards;
+    }
+    .s2-p {
+      font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.85;
+      margin-bottom: 20px; opacity: 0;
+      animation: up 0.45s ease 3.9s forwards;
+    }
+    .s2-cta {
+      font-size: 20px; font-weight: 700; color: #FFB300;
+      line-height: 1.5; opacity: 0;
+      animation: up 0.45s ease 4.6s forwards;
+    }
+    .em { color: #FFD54F; font-weight: 700; }
+
+    /* ── SCENE 3: SOLUTION（給付金の仕組み）── */
+    .scene-3 {
+      background: linear-gradient(165deg, #1a0f00 0%, #3d2600 55%, #5c3a00 100%);
+      display: flex; align-items: center;
+    }
+    .s3 { padding: 50px 28px; width: 100%; }
+    .s3-label { font-size: 20px; font-weight: 900; color: rgba(255,255,255,0.8); margin-bottom: 4px; opacity: 0; animation: up 0.4s ease 8.1s forwards; }
+    .s3-sub   { font-size: 36px; font-weight: 900; color: #FFB300; line-height: 1.2; margin-bottom: 24px; opacity: 0; animation: up 0.4s ease 8.1s forwards; }
+    .money-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px;
+      background: rgba(255,179,0,0.08); border: 1px solid rgba(255,179,0,0.18);
+      border-radius: 14px; margin-bottom: 12px; opacity: 0;
+    }
+    .m1 { animation: left 0.4s ease 8.5s  forwards; }
+    .m2 { animation: left 0.4s ease 9.0s  forwards; }
+    .m3 { animation: left 0.4s ease 9.5s  forwards; }
+    .m4 { animation: left 0.4s ease 10.0s forwards; }
+    .mi { font-size: 28px; min-width: 36px; }
+    .mt h3 { font-size: 16px; font-weight: 700; color: #FFD54F; margin-bottom: 3px; }
+    .mt p  { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.45; }
+
+    /* ── SCENE 4: シミュレーション ── */
+    .scene-4 {
+      background: linear-gradient(180deg, #0f0800 0%, #1a1000 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .s4 { padding: 50px 28px; width: 100%; }
+    .s4-h { text-align: center; margin-bottom: 22px; opacity: 0; animation: up 0.4s ease 12.8s forwards; }
+    .s4-h h2 { font-size: 22px; font-weight: 800; color: #fff; }
+    .s4-h p  { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+    .sim-box {
+      background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2);
+      border-radius: 18px; padding: 22px 20px; opacity: 0;
+      animation: up 0.45s ease 13.1s forwards;
+    }
+    .sim-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sim-row:last-child { border-bottom: none; }
+    .sim-label { font-size: 14px; color: rgba(255,255,255,0.7); }
+    .sim-val   { font-size: 22px; font-weight: 900; }
+    .zero { color: #FF7043; }
+    .plus { color: #FFB300; }
+    .sim-note {
+      margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.45);
+      text-align: center; line-height: 1.6; opacity: 0;
+      animation: up 0.4s ease 14.0s forwards;
+    }
+    .sim-big {
+      margin-top: 18px; text-align: center; opacity: 0;
+      animation: up 0.45s ease 14.5s forwards;
+    }
+    .sim-big p { font-size: 14px; color: rgba(255,255,255,0.6); }
+    .sim-big strong { font-size: 38px; font-weight: 900; color: #FFB300; display: block; margin-top: 4px; }
+
+    /* ── SCENE 5: CTA ── */
+    .scene-5 {
+      background: linear-gradient(155deg, #1a0f00 0%, #3d2600 50%, #5c3800 100%);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .deco-a { position: absolute; width: 300px; height: 300px; background: rgba(255,179,0,0.05); border-radius: 50%; top: -80px; right: -70px; }
+    .deco-b { position: absolute; width: 180px; height: 180px; background: rgba(255,179,0,0.04); border-radius: 50%; bottom: 50px; left: -50px; }
+    .s5 { padding: 50px 32px; text-align: center; position: relative; width: 100%; }
+    .logo-box {
+      width: 72px; height: 72px; background: rgba(255,179,0,0.2); border-radius: 22px;
+      display: flex; align-items: center; justify-content: center; font-size: 38px;
+      margin: 0 auto 10px; opacity: 0; animation: up 0.45s ease 16.8s forwards;
+    }
+    .brand   { font-size: 30px; font-weight: 900; color: #fff; opacity: 0; animation: up 0.4s ease 17.1s forwards; }
+    .brand-s { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; margin-bottom: 18px; opacity: 0; animation: up 0.4s ease 17.3s forwards; }
+    .cta-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,179,0,0.15); border: 1px solid rgba(255,179,0,0.4);
+      color: #FFD54F; padding: 9px 18px; border-radius: 100px;
+      font-size: 14px; font-weight: 700; margin-bottom: 14px; opacity: 0;
+      animation: up 0.4s ease 17.6s forwards;
+    }
+    .pulse-dot { width: 8px; height: 8px; background: #FFB300; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+    .cta-h   { font-size: 28px; font-weight: 900; color: #fff; line-height: 1.35; margin-bottom: 10px; opacity: 0; animation: up 0.4s ease 17.8s forwards; }
+    .cta-p   { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.75; margin-bottom: 18px; opacity: 0; animation: up 0.4s ease 18.1s forwards; }
+    .cta-btn {
+      display: block; background: #FFB300; color: #1a0f00; padding: 15px 32px;
+      border-radius: 100px; font-size: 15px; font-weight: 800;
+      box-shadow: 0 8px 22px rgba(255,179,0,0.35); opacity: 0;
+      animation: up 0.4s ease 18.4s forwards;
+    }
+    .replay {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; padding: 7px 18px; border-radius: 100px; font-size: 12px; cursor: pointer;
+      z-index: 10; opacity: 0; animation: fadeIn 0.4s ease 22s forwards;
+    }
+  </style>
+</head>
+<body>
+<div class="video">
+
+  <!-- SCENE 1: HOOK -->
+  <div class="scene scene-1">
+    <div class="s1-deco">&#165;</div>
+    <div class="s1-line l1">就労移行支援って</div>
+    <div class="s1-line l2">受講料</div>
+    <div class="s1-line l3">&#165;0</div>
+    <div class="s1-line l4">なの知ってた？</div>
+    <div class="s1-line l5">しかも給付金までもらえるって本当？</div>
+  </div>
+
+  <!-- SCENE 2: PROBLEM -->
+  <div class="scene scene-2">
+    <div class="s2">
+      <span class="tag t2">&#128176; お金の不安はありませんか？</span>
+      <h2 class="s2-h">「訓練に通いたいけど<br>お金が心配で<br>踏み出せない…」</h2>
+      <p class="s2-p">
+        生活費・交通費の不安で<br>
+        <span class="em">スキルアップを諦めている</span>方が多くいます。<br>
+        でも実は、<span class="em">費用の心配はゼロ</span>にできます。
+      </p>
+      <div class="s2-cta">ビズウェルなら<br>お金をもらいながら学べます</div>
+    </div>
+  </div>
+
+  <!-- SCENE 3: SOLUTION -->
+  <div class="scene scene-3">
+    <div class="s3">
+      <span class="tag t3">&#127974; 給付金の仕組み</span>
+      <div class="s3-label">ビズウェルで使える</div>
+      <div class="s3-sub">お金のサポート</div>
+      <div class="money-item m1">
+        <div class="mi">&#9989;</div>
+        <div class="mt"><h3>受講料&#165;0</h3><p>訓練費用は全額無料。自己負担なし</p></div>
+      </div>
+      <div class="money-item m2">
+        <div class="mi">&#128664;</div>
+        <div class="mt"><h3>交通費支給</h3><p>通所にかかる交通費を支給</p></div>
+      </div>
+      <div class="money-item m3">
+        <div class="mi">&#128176;</div>
+        <div class="mt"><h3>訓練給付金（条件あり）</h3><p>月額最大&#165;80,000の給付金を受給できる場合あり</p></div>
+      </div>
+      <div class="money-item m4">
+        <div class="mi">&#128188;</div>
+        <div class="mt"><h3>就職後も定着支援あり</h3><p>就職してからも相談・サポートを継続</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 4: シミュレーション -->
+  <div class="scene scene-4">
+    <div class="s4">
+      <div class="s4-h">
+        <h2>費用シミュレーション例</h2>
+        <p>※条件により異なります。担当者に確認してください</p>
+      </div>
+      <div class="sim-box">
+        <div class="sim-row">
+          <span class="sim-label">受講料</span>
+          <span class="sim-val zero">&#165;0</span>
+        </div>
+        <div class="sim-row">
+          <span class="sim-label">交通費（支給）</span>
+          <span class="sim-val plus">&#43;支給</span>
+        </div>
+        <div class="sim-row">
+          <span class="sim-label">訓練給付金（例）</span>
+          <span class="sim-val plus">&#43;&#165;80,000/月</span>
+        </div>
+        <div class="sim-row">
+          <span class="sim-label">昼食補助（施設による）</span>
+          <span class="sim-val plus">&#43;あり</span>
+        </div>
+      </div>
+      <div class="sim-big">
+        <p>実質的な月の収支</p>
+        <strong>プラス収支も可能</strong>
+      </div>
+      <div class="sim-note">※給付金の受給条件・金額は個人の状況によります<br>詳しくは無料相談でご確認ください</div>
+    </div>
+  </div>
+
+  <!-- SCENE 5: CTA -->
+  <div class="scene scene-5">
+    <div class="deco-a"></div>
+    <div class="deco-b"></div>
+    <div class="s5">
+      <div class="logo-box">&#127807;</div>
+      <div class="brand">ビズウェル</div>
+      <div class="brand-s">株式会社ビズリンクウェルビーイング</div>
+      <div class="cta-badge"><div class="pulse-dot"></div>お金の相談も無料</div>
+      <div class="cta-h">まずは<br>無料相談から</div>
+      <div class="cta-p">給付金・費用の詳細は無料相談で確認<br>オンライン相談OK<br>精神・発達障害のある方・ご家族歓迎</div>
+      <div class="cta-btn">プロフィールのリンクから &#8599;</div>
+    </div>
+  </div>
+
+  <button class="replay" onclick="location.reload()">&#9654; もう一度見る</button>
+</div>
+</body>
+</html>
