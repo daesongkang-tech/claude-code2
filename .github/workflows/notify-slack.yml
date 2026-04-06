@@ -64,8 +64,9 @@ jobs:
 
           payload = json.dumps({'text': message}).encode('utf-8')
 
+          webhook_url = os.environ.get('SLACK_WEBHOOK_URL', '')
           req = urllib.request.Request(
-              'https://hooks.slack.com/services/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',
+              webhook_url,
               data=payload,
               headers={'Content-Type': 'application/json'},
               method='POST'
@@ -76,3 +77,4 @@ jobs:
         env:
           DATE: ${{ steps.get_article.outputs.date }}
           FILE: ${{ steps.get_article.outputs.file }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
