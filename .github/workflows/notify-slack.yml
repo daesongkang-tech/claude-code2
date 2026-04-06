@@ -1,0 +1,78 @@
+name: Slack通知 - リタリコ記事
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'company/CMO/campaigns/notes/**_ビズウェル_リタリコ記事*.md'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+
+      - name: 新しい記事ファイルを取得
+        id: get_article
+        run: |
+          # 直前のコミットで追加・変更されたリタリコ記事ファイルを取得
+          FILE=$(git diff --name-only HEAD~1 HEAD | grep 'company/CMO/campaigns/notes/.*_ビズウェル_リタリコ記事.*\.md' | head -1)
+          if [ -z "$FILE" ]; then
+            echo "記事ファイルが見つかりません"
+            exit 0
+          fi
+          echo "file=$FILE" >> $GITHUB_OUTPUT
+
+          # ファイル名から日付を取得
+          DATE=$(basename "$FILE" | cut -c1-10)
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+
+          # 記事の全文を取得（Slack制限のため4000文字まで）
+          CONTENT=$(cat "$FILE" | head -c 4000)
+          # 改行をエスケープ
+          CONTENT="${CONTENT//$'\n'/\\n}"
+          CONTENT="${CONTENT//$'\r'/}"
+          # ダブルクォートをエスケープ
+          CONTENT="${CONTENT//\"/\\\"}"
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          cat "$FILE" | head -c 4000 >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Slackに通知
+        if: steps.get_article.outputs.file != ''
+        run: |
+          DATE="${{ steps.get_article.outputs.date }}"
+          FILE="${{ steps.get_article.outputs.file }}"
+
+          # 記事本文を読み込みJSONを構築
+          python3 - <<'PYEOF'
+          import json, urllib.request, os
+
+          date = os.environ.get('DATE', '')
+          filepath = os.environ.get('FILE', '')
+
+          with open(filepath, 'r', encoding='utf-8') as f:
+              article = f.read()
+
+          # 4000文字を超える場合は末尾を省略
+          if len(article) > 4000:
+              article = article[:4000] + '\n\n...(以下省略)'
+
+          message = f'【本日のリタリコ記事 {date}】\n\n{article}'
+
+          payload = json.dumps({'text': message}).encode('utf-8')
+
+          req = urllib.request.Request(
+              'https://hooks.slack.com/services/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',
+              data=payload,
+              headers={'Content-Type': 'application/json'},
+              method='POST'
+          )
+          with urllib.request.urlopen(req) as res:
+              print(f'Slack送信完了: {res.status}')
+          PYEOF
+        env:
+          DATE: ${{ steps.get_article.outputs.date }}
+          FILE: ${{ steps.get_article.outputs.file }}
