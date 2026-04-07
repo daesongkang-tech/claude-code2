@@ -17,8 +17,15 @@ jobs:
       - name: 新しい記事ファイルを取得
         id: get_article
         run: |
-          # 直前のコミットで追加・変更されたリタリコ記事ファイルを取得（日本語ファイル名対応）
-          FILE=$(git diff --name-only -z HEAD~1 HEAD | tr '\0' '\n' | grep 'company/CMO/campaigns/notes/' | grep '\.md$' | head -1)
+          # company/CMO/campaigns/notes/ 内で最も新しい .md ファイルを取得
+          FILE=$(python3 -c "
+          import os, glob
+          files = glob.glob('company/CMO/campaigns/notes/*.md')
+          if not files:
+              exit(0)
+          latest = max(files, key=os.path.getmtime)
+          print(latest)
+          ")
           if [ -z "$FILE" ]; then
             echo "記事ファイルが見つかりません"
             exit 0
@@ -26,19 +33,8 @@ jobs:
           echo "file=$FILE" >> $GITHUB_OUTPUT
 
           # ファイル名から日付を取得
-          DATE=$(basename "$FILE" | cut -c1-10)
+          DATE=$(python3 -c "import os; print(os.path.basename('$FILE')[:10])")
           echo "date=$DATE" >> $GITHUB_OUTPUT
-
-          # 記事の全文を取得（Slack制限のため4000文字まで）
-          CONTENT=$(cat "$FILE" | head -c 4000)
-          # 改行をエスケープ
-          CONTENT="${CONTENT//$'\n'/\\n}"
-          CONTENT="${CONTENT//$'\r'/}"
-          # ダブルクォートをエスケープ
-          CONTENT="${CONTENT//\"/\\\"}"
-          echo "content<<EOF" >> $GITHUB_OUTPUT
-          cat "$FILE" | head -c 4000 >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Slackに通知
         if: steps.get_article.outputs.file != ''
